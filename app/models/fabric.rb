@@ -1,4 +1,5 @@
 class Fabric < ApplicationRecord
+  has_many :orders
 
   def as_json
     {

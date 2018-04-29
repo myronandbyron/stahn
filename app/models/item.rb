@@ -1,4 +1,5 @@
 class Item < ApplicationRecord
+  has_many :orders
 
   def as_json
     {

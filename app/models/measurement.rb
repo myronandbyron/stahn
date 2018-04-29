@@ -1,4 +1,6 @@
 class Measurement < ApplicationRecord
+  has_many :orders
+  belongs_to :buyer
 
   def as_json
     {
