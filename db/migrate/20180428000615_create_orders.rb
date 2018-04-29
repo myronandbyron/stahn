@@ -4,7 +4,7 @@ class CreateOrders < ActiveRecord::Migration[5.1]
       t.float :subtotal
       t.float :tax
       t.float :price
-      t.binary :status
+      t.string :status
 
       t.timestamps
     end

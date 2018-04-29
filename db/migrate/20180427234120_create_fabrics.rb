@@ -5,7 +5,7 @@ class CreateFabrics < ActiveRecord::Migration[5.1]
       t.text :fabric_type
       t.float :price_per_yard
       t.string :image
-      t.boolean :availability
+      t.boolean :available
 
       t.timestamps
     end
