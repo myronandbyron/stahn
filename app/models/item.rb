@@ -8,4 +8,5 @@ class Item < ApplicationRecord
       price_per_item: price_per_item,
       image: image
     }
+  end
 end
