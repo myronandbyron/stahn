@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post 'buyer_token' => 'buyer_token#create'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get '/buyers' => 'buyers#index'

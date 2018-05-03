@@ -1,4 +1,5 @@
 class MeasurementsController < ApplicationController
+  before_action :authenticate_buyer
 
   def index
     measurements = Measurement.all
