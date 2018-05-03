@@ -1,6 +1,6 @@
 class Measurement < ApplicationRecord
   has_many :orders
-  # belongs_to :buyer
+  belongs_to :buyer
 
   def as_json
     {
@@ -28,7 +28,8 @@ class Measurement < ApplicationRecord
       crotch: crotch,
       thigh: thigh,
       knee: knee,
-      created_at: created_at
+      created_at: created_at,
+      buyer_id: buyer_id
     }
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180428000615) do
+ActiveRecord::Schema.define(version: 20180501211634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20180428000615) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest"
   end
 
   create_table "fabrics", force: :cascade do |t|
@@ -67,6 +68,7 @@ ActiveRecord::Schema.define(version: 20180428000615) do
     t.float "knee"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "buyer_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -76,6 +78,10 @@ ActiveRecord::Schema.define(version: 20180428000615) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "buyer_id"
+    t.integer "fabric_id"
+    t.integer "measurement_id"
+    t.integer "item_id"
   end
 
 end
