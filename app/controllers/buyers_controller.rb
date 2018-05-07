@@ -17,8 +17,6 @@ class BuyersController < ApplicationController
     else
       render json: {errors: buyer.errors.full_messages}, status: :bad_request
     end
-end
-
   end
 
   def show
