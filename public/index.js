@@ -37,8 +37,7 @@ var LoginPage = {
     return {
       email: "",
       password: "",
-      errors: [],
-      message: "First test message"
+      errors: []
     };
   },
   methods: {
@@ -70,6 +69,31 @@ var HomePage = {
   data: function() {
     return {
       items: [],
+      fabrics: []
+    };
+  },
+  created: function() {
+  },
+  methods: {
+    
+    showAllItems: function() {
+      axios.get("/items/" + this.$route.params.id).then(function(response){
+        this.item = response.data;
+      }.bind(this));
+    },
+    showAllFabrics: function() {
+      axios.get("/fabrics").then(function(response){
+        this.fabrics = response.data;
+      }.bind(this));
+    }
+  }
+};
+
+var ShowPage = {
+  template: "#show-page",
+  data: function() {
+    return {
+      items: [],
       fabrics: [],
       currentItem: {id: "", item_type: "", price: "", image: ""}
     };
@@ -80,42 +104,106 @@ var HomePage = {
     setCurrentItem: function(inputItem) {
       this.currentItem = inputItem;
     },
-    showAllItems: function() {
-      axios.get("/items").then(function(response){
+    showItem: function() {
+      var params = {
+        id: this.currentItem.id,
+        item_type: this.currentItem.item_type,
+        price: this.currentItem.price_per_yard,
+        image: this.currentItem.image
+      };
+      axios.get("/items/" + this.currentItem.id, params).then(function(response){
         this.items = response.data;
       }.bind(this));
     },
-    showAllFabrics: function() {
-      axios.get("/fabrics").then(function(response){
+    showFabric: function() {
+      axios.get("/fabrics/:id").then(function(response){
         this.fabrics = response.data;
       }.bind(this));
-    },
-    // popUpItem: function() {
-    //   var params = {
-    //     id: this.currentItem.id,
-    //     item_type: this.currentItem.item_type,
-    //     price: this.currentItem.price_per_yard,
-    //     image: this.currentItem.image
-    //   };
-    //   axios.get("/items/" + this.currentItem.id, params).then(function(response){
-    //     this.items = response.data;
-    //   }.bind(this));
-    // },
-    // popUpFabric: function() {
-    //   axios.get("/fabrics/:id").then(function(response){
-    //     this.fabrics = response.data;
-    //   }.bind(this));
-    // }
+    }
+  }
+};
+
+var MeasurementsNewPage = {
+  template: "#measurements-new-page",
+  data: function() {
+    return {
+      neck: "",
+      full_chest: "",
+      full_shoulder: "",
+      right_sleeve: "",
+      left_sleeve: "",
+      right_full_sleeve: "",
+      left_full_sleeve: "",
+      bicep: "",
+      wrist: "",
+      waist_stomach: "",
+      hips_seat: "",
+      front_jacket: "",
+      front_chest: "",
+      back_width: "",
+      half_shoulder_right: "",
+      half_shoulder_left: "",
+      full_back_length: "",
+      half_back_length: "",
+      trouser_waist: "",
+      trouser_outseam: "",
+      trouser_inseam: "",
+      crotch: "",
+      thigh: "",
+      knee: "",
+      errors: []
+    };
+  },
+  methods: {
+    submit: function() {
+      var params = {
+        neck: this.neck,
+        full_chest: this.full_chest,
+        full_shoulder: this.full_shoulder,
+        right_sleeve: this.right_sleeve,
+        left_sleeve: this.left_sleeve,
+        right_full_sleeve: this.right_full_sleeve,
+        left_full_sleeve: this.left_full_sleeve,
+        bicep: this.bicep,
+        wrist: this.wrist,
+        waist_stomach: this.waist_stomach,
+        hips_seat: this.hips_seat,
+        front_jacket: this.front_jacket,
+        front_chest: this.front_chest,
+        back_width: this.back_width,
+        half_shoulder_right: this.half_shoulder_right,
+        half_shoulder_left: this.half_shoulder_left,
+        full_back_length: this.full_back_length,
+        half_back_length: this.half_back_length,
+        trouser_waist: this.trouser_waist,
+        trouser_outseam: this.trouser_outseam,
+        trouser_inseam: this.trouser_inseam,
+        crotch: this.crotch,
+        thigh: this.thigh,
+        knee: this.knee,
+      };
+      axios
+        .post("/measurements", params)
+        .then(function(response) {
+          router.push("/");
+        })
+        .catch(
+          function(error) {
+            this.errors = error.response.data.errors;
+          }.bind(this)
+        );
+    }
   }
 };
 
 var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
-    { path: "/items/:id", component: HomePage },
-    { path: "fabrics/:id", component: HomePage},
+    { path: "/items/:id", component: ShowPage },
+    { path: "fabrics/:id", component: ShowPage},
     { path: "/signup", component: SignupPage },
-    { path: "/login", component: LoginPage }
+    { path: "/login", component: LoginPage },
+    { path: "/measurements/new", component: MeasurementsNewPage}
   ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };

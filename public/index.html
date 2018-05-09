@@ -3,6 +3,12 @@
 <head>
   <title>Stahn</title>
   <meta charset="utf-8">
+
+  <!-- BOOTSTRAP -->
+
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="index.css"> -->
+
   <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.js"></script>
@@ -65,8 +71,6 @@
       </div>
       <button class="btn btn-primary" v-on:click="submit()">Submit</button>
     </div>
-
-    <h1>{{ message }}</h1>
   </div>
 </template>
 
@@ -75,37 +79,154 @@
 
     <h1 v-on:click="showAllItems()">Items</h1>
     <div class="column">
-    <div class="col-md-6" v-for="item in items">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="item_type">{{ item.item_type }}</h2>
-          <img class="image" v-bind:src="item.image" width="200px">
-          <p class="card-text price">Price {{ item.price_per_item }}</p>
-          <a v-bind:href="'/#/items/' + item.id" v-on:click="popUpItem()">View item specifics</a>
-         <!--  Button trigger modal -->
-          <button type="button" class="btn-add-to-cart" data-toggle="modal" data-target="#exampleModal" v-on:click="addToCard()">
-            Add to shopping cart
+      <div class="col-md-6" v-for="item in items">
+        <div class="card" >
+          <a v-on:click="showItem()" v-bind:href="'/#/items/' + item.id">
+            <div class="card-body">
+              <h2 class="item_type">{{ item.item_type }}</h2>
+              <img class="image" v-bind:src="item.image" width="200px">
+              <p class="card-text price">Price: $ {{ item.price_per_item }} USD</p>
+             <!--  Button trigger modal -->
+            </div>
+          </a>
+          <button type="button" class="btn-add-to-cart" data-toggle="modal" data-target="#exampleModal" v-on:click="addToCart()">
+              Add to shopping cart
           </button>
-        </div>
-      </div>
     </div>
 
     <h1 v-on:click="showAllFabrics()">Fabrics</h1>
     <div class="column">
     <div class="col-md-6" v-for="fabric in fabrics">
       <div class="card">
-        <div class="card-body">
+        <div class="card-body" v-on:click:"location.href='/#/items/' + this.currentItem.id">
           <h2 class="fabric_type">{{ fabric.fabric_type }}</h2>
           <img class="image" v-bind:src="fabric.image" width="200px">
           <p class="card-text price">Price {{ fabric.price_per_yard }}</p>
           <a v-bind:href="'/#/fabrics/' + fabric.id" v-on:click="popUpFabric()" class="btn btn-primary">View fabric specifics</a>
          <!--  Button trigger modal -->
-          <button type="button" class="btn-add-to-cart" data-toggle="modal" data-target="#exampleModal" v-on:click="addToCard()">
+          <button type="button" class="btn-add-to-cart" data-toggle="modal" data-target="#exampleModal" v-on:click="addToCart()">
             Add to shopping cart
           </button>
         </div>
       </div>
     </div>
+  </div>
+</template>
+
+<template id="show-page">
+  <div>
+    
+  </div>
+</template>
+
+<template id="measurements-new-page">
+  <div class="vue-component">
+
+    <div class="container">
+      <h1>Measurements</h1>
+      <p>Add your measurements in inches (down to .1 inches)</p>
+      <ul>
+        <li class="text-danger" v-for="error in errors">{{ error }}</li>
+      </ul>
+      <div class="form-group">
+        <label>Neck:</label> 
+        <input type="text" class="form-control" v-model="neck">
+      </div>
+      <div class="form-group">
+        <label>Full Chest:</label> 
+        <input type="text" class="form-control" v-model="full_chest">
+      </div>
+      <div class="form-group">
+        <label>Full Shoulder:</label> 
+        <input type="text" class="form-control" v-model="full_shoulder">
+      </div>
+      <div class="form-group">
+        <label>Right Sleeve:</label> 
+        <input type="text" class="form-control" v-model="right_sleeve">
+      </div>
+      <div class="form-group">
+        <label>Left Sleeve:</label> 
+        <input type="text" class="form-control" v-model="left_sleeve">
+      </div>
+      <div class="form-group">
+        <label>Right Full Sleeve:</label> 
+        <input type="text" class="form-control" v-model="right_full_sleeve">
+      </div>
+      <div class="form-group">
+        <label>Left Full Sleeve:</label> 
+        <input type="text" class="form-control" v-model="left_full_sleeve">
+      </div>
+      <div class="form-group">
+        <label>Bicep:</label> 
+        <input type="text" class="form-control" v-model="bicep">
+      </div>
+      <div class="form-group">
+        <label>Wrist:</label> 
+        <input type="text" class="form-control" v-model="wrist">
+      </div>
+      <div class="form-group">
+        <label>Waist/Stomach:</label> 
+        <input type="text" class="form-control" v-model="waist_stomach">
+      </div>
+      <div class="form-group">
+        <label>Hips/Seat:</label> 
+        <input type="text" class="form-control" v-model="hips_seat">
+      </div>
+      <div class="form-group">
+        <label>Front Jacket:</label> 
+        <input type="text" class="form-control" v-model="front_jacket">
+      </div>
+      <div class="form-group">
+        <label>Front Chest:</label> 
+        <input type="text" class="form-control" v-model="front_chest">
+      </div>
+      <div class="form-group">
+        <label>Back Width:</label> 
+        <input type="text" class="form-control" v-model="back_width">
+      </div>
+      <div class="form-group">
+        <label>Half Shoulder, Right:</label> 
+        <input type="text" class="form-control" v-model="half_shoulder_right">
+      </div>
+      <div class="form-group">
+        <label>Half Shoulder, Left:</label> 
+        <input type="text" class="form-control" v-model="half_shoulder_left">
+      </div>
+      <div class="form-group">
+        <label>Full Back Length:</label> 
+        <input type="text" class="form-control" v-model="full_back_length">
+      </div>
+      <div class="form-group">
+        <label>Half Back Length:</label> 
+        <input type="text" class="form-control" v-model="half_back_length">
+      </div>
+      <div class="form-group">
+        <label>Trouser Waist:</label> 
+        <input type="text" class="form-control" v-model="trouser_waist">
+      </div>
+      <div class="form-group">
+        <label>Trouser Outseam:</label> 
+        <input type="text" class="form-control" v-model="trouser_outseam">
+      </div>
+      <div class="form-group">
+        <label>Trouser Inseam:</label> 
+        <input type="text" class="form-control" v-model="trouser_inseam">
+      </div>
+      <div class="form-group">
+        <label>Crotch:</label> 
+        <input type="text" class="form-control" v-model="crotch">
+      </div>
+      <div class="form-group">
+        <label>Thigh:</label> 
+        <input type="text" class="form-control" v-model="thigh">
+      </div>
+      <div class="form-group">
+        <label>Knee:</label> 
+        <input type="text" class="form-control" v-model="knee">
+      </div>
+      <button class="btn btn-primary" v-on:click="submit()">Submit</button>
+    </div>
+
   </div>
 </template>
 
