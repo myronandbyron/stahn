@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Stahn</title>
-  <meta charset="utf-8">
+  <head>
+    <title>Stahn</title>
+    <meta charset="utf-8">
 
-  <!-- BOOTSTRAP -->
+    <!-- BOOTSTRAP -->
+  <!-- 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css"> -->
 
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" href="index.css"> -->
-
-  <script src="https://unpkg.com/vue/dist/vue.js"></script>
-  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
-  <script src="https://unpkg.com/axios/dist/axios.js"></script>
-  <script defer src="index.js"></script>
-</head>
-<body>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script defer src="index.js"></script>
+  </head>
+  <body>
     <div id="vue-app">
       <a href="/#/signup">Signup</a>
       <a href="/#/login">Login</a>
+      <a href="/#/order">Order</a>
       <router-view></router-view>
-  </div>
-</body>
+    </div>
+  </body>
 </html>
 
 <template id="signup-page">
@@ -76,46 +77,67 @@
 
 <template id="home-page">
   <div class="vue-component">
-
     <h1 v-on:click="showAllItems()">Items</h1>
     <div class="column">
       <div class="col-md-6" v-for="item in items">
-        <div class="card" >
-          <a v-on:click="showItem()" v-bind:href="'/#/items/' + item.id">
+        <div class="card">
+          <a v-bind:href="'/#/items/' + item.id">
             <div class="card-body">
               <h2 class="item_type">{{ item.item_type }}</h2>
               <img class="image" v-bind:src="item.image" width="200px">
               <p class="card-text price">Price: $ {{ item.price_per_item }} USD</p>
-             <!--  Button trigger modal -->
+               <!--  Button trigger modal -->
+              <button type="button" class="btn-add-to-cart" data-toggle="modal" data-target="#exampleModal" v-on:click="addToCart()">
+                Add to shopping cart
+              </button>
             </div>
           </a>
-          <button type="button" class="btn-add-to-cart" data-toggle="modal" data-target="#exampleModal" v-on:click="addToCart()">
-              Add to shopping cart
-          </button>
+        </div>
+      </div>
     </div>
 
     <h1 v-on:click="showAllFabrics()">Fabrics</h1>
     <div class="column">
-    <div class="col-md-6" v-for="fabric in fabrics">
-      <div class="card">
-        <div class="card-body" v-on:click:"location.href='/#/items/' + this.currentItem.id">
-          <h2 class="fabric_type">{{ fabric.fabric_type }}</h2>
-          <img class="image" v-bind:src="fabric.image" width="200px">
-          <p class="card-text price">Price {{ fabric.price_per_yard }}</p>
-          <a v-bind:href="'/#/fabrics/' + fabric.id" v-on:click="popUpFabric()" class="btn btn-primary">View fabric specifics</a>
-         <!--  Button trigger modal -->
-          <button type="button" class="btn-add-to-cart" data-toggle="modal" data-target="#exampleModal" v-on:click="addToCart()">
-            Add to shopping cart
-          </button>
+      <div class="col-md-6" v-for="fabric in fabrics">
+        <div class="card">
+          <a v-bind:href="'/#/fabrics/' + fabric.id">
+            <div class="card-body">
+              <h2 class="name">{{ fabric.name }}</h2>
+              <h3 class="fabric_type">{{ fabric.fabric_type }}</h3>
+              <p class="card-text price">Price {{ fabric.price_per_yard }}</p>
+              <img class="image" v-bind:src="fabric.image" width="200px">
+               <!--  Button trigger modal -->
+              <button type="button" class="btn-add-to-cart" data-toggle="modal" data-target="#exampleModal" v-on:click="addToCart()">
+                Add to shopping cart
+              </button>
+            </div>
+          </a>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<template id="show-page">
+<template id="show-item-page">
   <div>
-    
+    <h2 class="item_type">{{ item.item_type }}</h2>
+    <img class="image" v-bind:src="item.image" width="200px">
+    <p class="card-text price">Price: $ {{ item.price_per_item }} USD</p>
+    <button type="button" class="btn-add-to-cart" data-toggle="modal" data-target="#exampleModal" v-on:click="addToCart()">
+      Add to shopping cart
+    </button>
+  </div>
+</template>
+
+<template id="show-fabric-page">
+  <div>
+    <h2 class="name">{{ fabric.name }}</h2>
+    <h3 class="fabric_type">{{ fabric.fabric_type }}</h3>
+    <p class="card-text price">Price {{ fabric.price_per_yard }}</p>
+    <img class="image" v-bind:src="fabric.image" width="200px">
+    <button type="button" class="btn-add-to-cart" data-toggle="modal" data-target="#exampleModal" v-on:click="addToCart()">
+      Add to shopping cart
+    </button> 
   </div>
 </template>
 

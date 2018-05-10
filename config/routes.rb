@@ -32,4 +32,10 @@ Rails.application.routes.draw do
   patch '/orders/:id' => 'orders#update'
   delete '/orders/:id' => 'orders#destroy'
 
+  get '/submitted_orders' => 'submitted_orders#index'
+  post '/submitted_orders' => 'submitted_orders#create'
+  get '/submitted_orders/:id' => 'submitted_orders#show'
+  patch '/submitted_orders/:id' => 'submitted_orders#update'
+  delete '/submitted_orders/:id' => 'submitted_orders#destroy'
+
 end

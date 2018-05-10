@@ -7,6 +7,14 @@ class OrdersController < ApplicationController
   end
 
   def create
+    order = Order.new(
+      status: params[:status],
+      buyer_id: params[:buyer_id],
+      fabric_id: params[:fabric_id],
+      measurement_id: params[:measurement_id],
+      item_id: params[:item_id]
+      )
+    order.save
   end
 
   def show

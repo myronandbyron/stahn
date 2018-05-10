@@ -1,6 +1,7 @@
 class Buyer < ApplicationRecord
   has_secure_password
   has_many :orders
+  has_many :submitted_orders
   has_many :measurements
 
   validates :name, presence: true

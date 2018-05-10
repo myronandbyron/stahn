@@ -1,3 +1,5 @@
+/* global Vue, VueRouter, axios */
+
 var SignupPage = {
   template: "#signup-page",
   data: function() {
@@ -75,10 +77,15 @@ var HomePage = {
   created: function() {
   },
   methods: {
-    
+    // setCurrentItem: function(inputItem) {
+    //   this.currentItem = inputItem;
+    // },
+    // setCurrentFabric: function(inputFabric) {
+    //   this.currentFabric = inputFabric;
+    // },
     showAllItems: function() {
-      axios.get("/items/" + this.$route.params.id).then(function(response){
-        this.item = response.data;
+      axios.get("/items/").then(function(response){
+        this.items = response.data;
       }.bind(this));
     },
     showAllFabrics: function() {
@@ -89,37 +96,31 @@ var HomePage = {
   }
 };
 
-var ShowPage = {
-  template: "#show-page",
+var ItemShowPage = {
+  template: "#show-item-page",
   data: function() {
     return {
-      items: [],
-      fabrics: [],
-      currentItem: {id: "", item_type: "", price: "", image: ""}
+      item: {}
     };
   },
-  created: function() {
+  created: function(){
+    axios.get("/items/" + this.$route.params.id).then(function(response) {
+      this.item = response.data;
+    }.bind(this));
+  }
+};
+
+var FabricShowPage = {
+  template: "#show-fabric-page",
+  data: function() {
+    return {
+      fabric: {}
+    };
   },
-  methods: {
-    setCurrentItem: function(inputItem) {
-      this.currentItem = inputItem;
-    },
-    showItem: function() {
-      var params = {
-        id: this.currentItem.id,
-        item_type: this.currentItem.item_type,
-        price: this.currentItem.price_per_yard,
-        image: this.currentItem.image
-      };
-      axios.get("/items/" + this.currentItem.id, params).then(function(response){
-        this.items = response.data;
-      }.bind(this));
-    },
-    showFabric: function() {
-      axios.get("/fabrics/:id").then(function(response){
-        this.fabrics = response.data;
-      }.bind(this));
-    }
+  created: function(){
+    axios.get("/fabrics/" + this.$route.params.id).then(function(response) {
+      this.fabric = response.data;
+    }.bind(this));
   }
 };
 
@@ -199,8 +200,8 @@ var MeasurementsNewPage = {
 var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
-    { path: "/items/:id", component: ShowPage },
-    { path: "fabrics/:id", component: ShowPage},
+    { path: "/items/:id", component: ItemShowPage },
+    { path: "/fabrics/:id", component: FabricShowPage},
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
     { path: "/measurements/new", component: MeasurementsNewPage}
