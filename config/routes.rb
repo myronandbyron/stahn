@@ -26,11 +26,11 @@ Rails.application.routes.draw do
   patch '/measurements/:id' => 'measurements#update'
   delete '/measurements/:id' => 'measurements#destroy'
 
-  get '/orders' => 'orders#index'
-  post '/orders' => 'orders#create'
-  get '/orders/:id' => 'orders#show'
-  patch '/orders/:id' => 'orders#update'
-  delete '/orders/:id' => 'orders#destroy'
+  get '/shopping_carts' => 'shopping_carts#index'
+  post '/shopping_carts' => 'shopping_carts#create'
+  get '/shopping_carts/:id' => 'shopping_carts#show'
+  patch '/shopping_carts/:id' => 'shopping_carts#update'
+  delete '/shopping_carts/:id' => 'shopping_carts#destroy'
 
   get '/submitted_orders' => 'submitted_orders#index'
   post '/submitted_orders' => 'submitted_orders#create'

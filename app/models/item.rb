@@ -1,5 +1,5 @@
 class Item < ApplicationRecord
-  has_many :orders
+  has_many :shopping_carts
 
   def as_json
     {

@@ -1,6 +1,6 @@
 class Buyer < ApplicationRecord
   has_secure_password
-  has_many :orders
+  has_many :shopping_carts
   has_many :submitted_orders
   has_many :measurements
 

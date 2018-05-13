@@ -1,4 +1,5 @@
 class SubmittedOrdersController < ApplicationController
+  before_action :authenticate_buyer
   
   def index
     submitted_orders = SubmittedOrder.all

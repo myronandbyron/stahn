@@ -66,23 +66,38 @@ var LoginPage = {
   }
 };
 
+var ShoppingCartEditPage = {
+  template: "#edit-shopping-cart-page",
+  data: function() {
+    return {
+      status: "ok",
+    };
+  },
+  created: function() {
+    axios.get("/shopping_carts/" + this.$route.params.id).then(function(response) {
+      this.shopping_cart = response.data;
+      }.bind(this));
+  },
+  methods: {
+    delete: function() {
+      var params = {
+
+      }
+    }
+  }
+};
+
 var HomePage = {
   template: "#home-page",
   data: function() {
     return {
       items: [],
-      fabrics: []
+      fabrics: [],
     };
   },
-  created: function() {
+  created: {
   },
   methods: {
-    // setCurrentItem: function(inputItem) {
-    //   this.currentItem = inputItem;
-    // },
-    // setCurrentFabric: function(inputFabric) {
-    //   this.currentFabric = inputFabric;
-    // },
     showAllItems: function() {
       axios.get("/items/").then(function(response){
         this.items = response.data;
@@ -92,6 +107,9 @@ var HomePage = {
       axios.get("/fabrics").then(function(response){
         this.fabrics = response.data;
       }.bind(this));
+    },
+    addItemToCart: function() {
+      console.log("hi")
     }
   }
 };
@@ -201,10 +219,11 @@ var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
     { path: "/items/:id", component: ItemShowPage },
-    { path: "/fabrics/:id", component: FabricShowPage},
+    { path: "/fabrics/:id", component: FabricShowPage },
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
-    { path: "/measurements/new", component: MeasurementsNewPage}
+    { path: "shopping_carts/:id/edit", component: ShoppingCartEditPage },
+    { path: "/measurements/new", component: MeasurementsNewPage }
   ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };

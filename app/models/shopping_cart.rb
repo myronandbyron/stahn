@@ -1,4 +1,4 @@
-class Order < ApplicationRecord
+class ShoppingCart < ApplicationRecord
   belongs_to :item
   belongs_to :measurement
   belongs_to :fabric
@@ -12,7 +12,8 @@ class Order < ApplicationRecord
       measurement_id: measurement_id,
       fabric_id: fabric_id,
       buyer_id: buyer_id,
-      submitted_order: submitted_order
+      item_type: item_type,
+      fabric_name: fabric_name,
     }
   end
 end

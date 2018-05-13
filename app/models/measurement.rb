@@ -1,5 +1,5 @@
 class Measurement < ApplicationRecord
-  has_many :orders
+  has_many :shopping_carts
   belongs_to :buyer
 
   validates :neck, :full_chest, :full_shoulder, :right_sleeve, :left_sleeve, :right_full_sleeve, :left_full_sleeve, :bicep, :wrist, :waist_stomach, :hips_seat, :front_jacket, :front_chest, :back_width, :half_shoulder_right, :half_shoulder_left, :full_back_length, :half_back_length, :trouser_waist, :trouser_outseam, :trouser_inseam, :crotch, :thigh, :knee, presence: true
