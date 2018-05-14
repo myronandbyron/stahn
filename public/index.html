@@ -72,6 +72,7 @@
 
 <template id="edit-shopping-cart-page">
   <div>
+    {{ message }}
     <h2>Your Order</h2>
     <p><button class="remove-item" v-on:click="delete()">Remove</button>{{ item.type }}</p>
     <p><button class="remove-fabric" v-on:click="delete()">Remove</button>{{ fabric.name}}</p>
@@ -193,7 +194,6 @@
 
 <template id="home-page">
   <div class="vue-component">
-    hiiiiya
     <h1 v-on:click="showAllItems()">Items</h1>
     <div class="column">
       <div class="col-md-6" v-for="item in items">
@@ -206,7 +206,9 @@
             </div>
           </a>
         </div>
-        <button type="button" class="btn-add-to-cart" data-target="modal" v-on:click="addItemToCart">Add to order</button>
+        <a v-bind:href="/shopping_carts/">
+          <button type="button" class="btn-add-to-cart" data-target="modal" v-on:click="addItemToCart">Add to order</button>
+        </a>
       </div>
     </div>
 
@@ -230,12 +232,17 @@
       </div>
     </div>
 
+  </div>
+</template>
+
+<template id="shopping-cart-new-page">
+  <div>
+
     <div class="btn-add-to-cart">
       <div>
         <h2 class="item_type">{{ item.item_type }}</h2>
         <img class="image" v-bind:src="item.image" width="200px">
         <p class="card-text price">Price: $ {{ item.price_per_item }} USD</p>
-        <button class="btn btn-primary" v-on:click="submit()">Submit</button>
       </div> 
     </div>
 

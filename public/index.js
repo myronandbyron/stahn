@@ -33,6 +33,29 @@ var SignupPage = {
   }
 };
 
+// var ShoppingCartNewPage = {
+//   template: "#shopping-cart-new-page",
+//   data: function() {
+//     return {
+//       item_type: "",
+//       image: "",
+//     };
+//   },
+//   methods: {
+//     submit: function() {
+//       var params = {
+//         item_type: this.item_type,
+//         image: this.image,
+//         price_per_item: this.price_per_item
+//       };
+//       axios
+//         .post("/shopping_carts", params)
+//         .then(function(response) {
+//         });
+//     }
+//   }
+// };
+
 var LoginPage = {
   template: "#login-page",
   data: function() {
@@ -70,7 +93,7 @@ var ShoppingCartEditPage = {
   template: "#edit-shopping-cart-page",
   data: function() {
     return {
-      status: "ok",
+      message: "hi"
     };
   },
   created: function() {
@@ -93,7 +116,8 @@ var HomePage = {
     return {
       items: [],
       fabrics: [],
-    };
+      currentItem: {item_type: "", price_per_item: "", image: ""}
+    }
   },
   created: {
   },
@@ -108,8 +132,19 @@ var HomePage = {
         this.fabrics = response.data;
       }.bind(this));
     },
+    setCurrentItem: function(inputItem) {
+        this.currentItem = inputItem;
+    },
     addItemToCart: function() {
-      console.log("hi")
+      var params = {
+        // id: this.currentItem.id,
+        item_type: this.currentItem.item_type,
+        price_per_item: this.currentItem.price_per_item,
+        image: this.currentItem.image
+      };
+      axios.patch("/shopping_cart", params).then(function(response){
+        console.log('added');
+      })
     }
   }
 };
@@ -222,7 +257,8 @@ var router = new VueRouter({
     { path: "/fabrics/:id", component: FabricShowPage },
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
-    { path: "shopping_carts/:id/edit", component: ShoppingCartEditPage },
+    { path: "/shopping_carts", component: ShoppingCartEditPage },
+    // { path: "/shopping_carts/new", component: ShoppingCartNewPage },
     { path: "/measurements/new", component: MeasurementsNewPage }
   ],
   scrollBehavior: function(to, from, savedPosition) {
